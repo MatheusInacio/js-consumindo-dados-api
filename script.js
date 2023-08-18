@@ -1,27 +1,28 @@
 async function buscarEndereco(cep) {
-  var mensagemErro = document.getElementById("erro");
+  let mensagemErro = document.getElementById("erro");
   mensagemErro.innerHTML = "";
   try {
-    var consultaCep = await fetch(`https://viacep.com.br/ws/${cep}/json`);
-    var consultaJson = await consultaCep.json();
-    if (consultaJson.erro) {
-      throw Error('Cep não Existe');
-    }
+      let consultaCep = await fetch(`https://viacep.com.br/ws/${cep}/json`);
+      let consultaJson = await consultaCep.json();
+      if (consultaJson.erro) {
+          throw Error('Cep não Existe');
+      }
 
-    var cidade = document.getElementById("cidade");
-    var logradouro = document.getElementById("logradouro");
-    var estado = document.getElementById("estado");
-    var bairro = document.getElementById("bairro");
+      let cidade = document.getElementById("cidade");
+      let logradouro = document.getElementById("endereco");
+      let estado = document.getElementById("estado");
+      let bairro = document.getElementById("bairro");
 
-    cidade.value = consultaJson.localidade;
-    logradouro.value = consultaJson.logradouro;
-    estado.value = consultaJson.uf;
-    bairro.value = consultaJson.bairro;
+      cidade.value = consultaJson.localidade;
+      logradouro.value = consultaJson.logradouro;
+      estado.value = consultaJson.uf;
+      bairro.value = consultaJson.bairro;
 
-    return consultaJson;
+      console.log(consultaJson);
+      return consultaJson;
   } catch (erro) {
-    mensagemErro.innerHTML = `<p>CEP Inválido, tente novamente</p>`;
-    console.log(erro);
+      mensagemErro.innerHTML = `<p>CEP Inválido, tente novamente</p>`;
+      console.log(erro);
   }
 
 }
@@ -31,5 +32,5 @@ async function buscarEndereco(cep) {
 //console.log(conjuntoCeps);
 //Promise.all(conjuntoCeps).then(respostas => console.log(respostas));
 
-var cep = document.getElementById("cep");
+let cep = document.getElementById("cep");
 cep.addEventListener("focusout", () => buscarEndereco(cep.value));
